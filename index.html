@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>spotify</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+
+
+<div id="vue">
+
+
+
+                <nav>
+                  <div class="container">
+                    <div class="logo"></div>
+                    <h3>Pop Bubbles</h3>
+                  </div>
+
+                </nav>
+                <div v-for="song in songs">
+                    {{ song }}
+                </div>
+                <div class="bubbleSpace">
+                  <div class="bubble" v-for="track in tracks" v-bind:style="{ height: (track.popularity * 4.5) + 'px', width: (track.popularity * 4.5) + 'px', backgroundImage: 'url(' + track.album.images[0].url+ ')'}">
+                    <div class="innerBubble">
+                      <h4>{{ track.name }}</h4> <br>
+                      <h5>{{ track.artists[0].name }}</h5>
+                    </div>
+
+                  </div>
+
+                </div>
+
+
+
+</div>
+
+<button onclick="moveAround()">load</button>
+
+
+<footer>
+  <div class="container">
+    <div class="col-sm-4">
+      <img src="" alt="">
+    </div>
+    <div class="col-sm-4 daCenter">
+      <div class="row">
+        <i class="fa fa-thumbs-down mainNav" aria-hidden="true"></i>
+        <i class="fa fa-step-backward mainNav" aria-hidden="true"></i>
+        <i class="fa fa-play mainNav" aria-hidden="true"></i>
+        <i class="fa fa-step-forward mainNav" aria-hidden="true"></i>
+        <i class="fa fa-thumbs-up mainNav" aria-hidden="true"></i>
+      </div>
+      <div class="row">
+        <p id="startTime"></p>
+        <div class="musicBar"></div>
+        <p id="endTime"></p>
+      </div>
+    </div>
+    <div class="col-sm-4"></div>
+  </div>
+</footer>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.15.3/axios.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.2.6/vue.js"></script>
+<script src="app.js"></script>
+<script src="js/animate.js"></script>
+
+
+</body>
+</html>
