@@ -18,6 +18,7 @@ $(document).ready(function(){
   }
   */
 
+
   var bubble = $('.bubble');
 
 
@@ -26,14 +27,18 @@ $(document).ready(function(){
     if($(this).siblings().hasClass('playing')){
       $(this).siblings().removeClass('playing')
     }
+
   });
 
 
   bubble.mouseover(function() {
-    $(this).children().css('display', 'block');
-    if($(this).width() < 200){
-      $(this).addClass('smallBub');
+    if(!$(this).hasClass('playing')){
+      $(this).children().css('display', 'block');
+      if($(this).width() < 200){
+        $(this).addClass('smallBub');
+      }
     }
+
   });
   bubble.mouseleave(function() {
     $(this).children().css('display', 'none');
@@ -41,6 +46,7 @@ $(document).ready(function(){
       $(this).removeClass('smallBub');
     }
   });
+
 
 
 });

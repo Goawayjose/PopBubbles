@@ -5,63 +5,59 @@ var app = new Vue({
     el: '#vue',
 
     data: {
-     songs : ["mask off", "heartless"],
-     tracks : []
+     songs : [],
+     onPlay : [],
+     tracks : [],
+
     },
     mounted() {
 
-      // var params = {};
-      // for (i = 0; i < this.songs.length; i++) {
-      // // set the key/property (input element) for your object
-      // var ele = this.songs[i];
-      // // add the property to the object and set the value
-      // return params[ele]
-      // }
+      //getting top-100
+      axios.get('songs.php')
+        .then(function (response){
+          app.songs = response.data;
+          // console.log(app.songs.length);
 
+          for (i = 0; i < app.songs.length; i++) {
 
-        //getting those top-100 and searching spotify
+            var song = app.songs[i];
 
-          $.ajax({
-              url: 'https://api.spotify.com/v1/search',
-              data: {
-                  q: 'mask off',
-                  type: 'track'
-              },
-              success: function (response) {
+              $.ajax({
+                  url: 'https://api.spotify.com/v1/search',
+                  data: {
+                      q: song,
+                      type: 'track'
+                  },
+                  success: function (response) {
 
-                app.tracks = response.tracks.items;
-                  console.log(items);
+                    app.tracks.push(response.tracks.items[1]);
+                      // console.log(items);
 
-              }
-          });
+                  }
+              });
+          }
+
+        }).catch(function (error) {
+          console.log(error);
+        });
+    },
+    methods: {
+
+      playEt: function (name) {
+
+          app.onPlay.push(name);
+      }
 
     }
 
-  /*  mounted() {
-      //getting top-100
-      axios.get('songs.php')
-        .then(response => this.songs = response.data)
-        .catch(function (error) {
-          console.log(error);
-        });
-        console.log(this.songs);
-
-      //getting those top-100 and searching spotify
-     for (i = 0; i < this.songs.length; i++) {
-        $.ajax({
-            url: 'https://api.spotify.com/v1/search',
-            data: {
-                q: songs[i],
-                type: 'track'
-            },
-            success: function (response) {
-                console.log(response.tracks);
-            }
-        });
-      }
 
 
-    } */
+});
 
 
+var bubble = $('.bubble');
+
+
+bubble.click(function() {
+  alert('me');
 });
