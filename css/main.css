@@ -28,6 +28,8 @@ nav {
   float: left;
   transition: all 0.3s ease-out;
   text-align: center; }
+  .bubble:hover .innerBubble {
+    display: block; }
 
 .playing:after {
   content: '';
@@ -53,6 +55,9 @@ nav {
   width: 300px !important;
   height: 300px !important; }
 
+.removing {
+  display: none; }
+
 .innerBubble {
   padding-top: 20%;
   text-align: center;
@@ -67,10 +72,11 @@ footer {
   padding-top: 15px;
   background-color: #272727;
   bottom: 0;
-  height: 100px;
+  min-height: 100px;
   width: 100%;
   position: fixed;
-  z-index: 99; }
+  z-index: 99;
+  padding-bottom: 15px; }
 
 footer .daCenter {
   text-align: center; }
@@ -88,5 +94,15 @@ footer i.fa {
   height: 4px;
   border: 1px solid #979797;
   border-radius: 4px; }
+
+#progressBar {
+  width: 0px;
+  height: 4px;
+  background-color: #1fde63;
+  position: absolute; }
+
+.lilAlbum {
+  height: 80px;
+  width: 80px; }
 
 /*# sourceMappingURL=main.css.map */

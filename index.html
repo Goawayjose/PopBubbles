@@ -27,9 +27,9 @@
                 </nav>
 
                 <div class="bubbleSpace">
-                  <div class="bubble" v-on:click="playEt(track.name)" v-for="track in tracks"  v-bind:style="{ height: (track.popularity * 4.5) + 'px', width: (track.popularity * 4.5) + 'px', backgroundImage: 'url(' + track.album.images[0].url+ ')'}">
+                  <div class="bubble" v-bind:id="track.id" v-on:click="playEt(track)" v-for="track in tracks"  v-bind:style="{ height: (track.popularity * 4.5) + 'px', width: (track.popularity * 4.5) + 'px', backgroundImage: 'url(' + track.album.images[0].url+ ')'}">
                     <div class="innerBubble">
-                      <h4  v-on:click="playEt(track.name)" >{{ track.name }} <br> {{ track.artists[0].name }} <br> {{ track.preview_url }}</h4>
+                      <h4 >{{ track.name }} <br> {{ track.artists[0].name }}  </h4>
                     </div>
 
                   </div>
@@ -38,27 +38,50 @@
 
 
 <footer>
-  <div class="container">
-    <div class="col-sm-4">
-      <div v-for="track in onPlay">{{track}}</div>
-      <img src="" alt="">
-    </div>
-    <div class="col-sm-4 daCenter">
-      <div class="row">
-        <i class="fa fa-thumbs-down mainNav" aria-hidden="true"></i>
-        <i class="fa fa-step-backward mainNav" aria-hidden="true"></i>
-        <i class="fa fa-play mainNav" aria-hidden="true"></i>
-        <i class="fa fa-step-forward mainNav" aria-hidden="true"></i>
-        <i class="fa fa-thumbs-up mainNav" aria-hidden="true"></i>
-      </div>
-      <div class="row">
-        <p id="startTime"></p>
-        <div class="musicBar"></div>
-        <p id="endTime"></p>
-      </div>
-    </div>
-    <div class="col-sm-4"></div>
+  <div v-for="track in onPlay" id="wrapper">
+    <audio ref="player" id="myTrack" controls>
+                <source v-bind:src="track.preview_url" >
+                Your browser does not support the audio element.
+    </audio>
   </div>
+
+    <div class="container">
+      <div class="col-sm-4">
+
+        <div v-for="track in onPlay">
+          <img v-bind:src="track.album.images[0].url"  class="lilAlbum" alt="">{{track.name}} <br>
+        {{track.artists[0].name}}</div>
+
+      </div>
+      <div class="col-sm-4 daCenter">
+        <div class="row">
+          <i class="fa fa-thumbs-down mainNav" v-on:click="disLike()" aria-hidden="true"></i>
+          <i class="fa fa-step-backward mainNav" aria-hidden="true"></i>
+        <button  v-on:click="playOrPause()" class="btn btn-warning ">
+            <i class="fa fa-play mainNav play"  aria-hidden="true"></i>
+            <i class="fa fa-pause mainNav pause" style="display: none;" aria-hidden="true"></i>
+        </button>
+          <i class="fa fa-step-forward mainNav" aria-hidden="true"></i>
+          <i class="fa fa-thumbs-up mainNav" v-on:click="shareDis()" aria-hidden="true"></i>
+        </div>
+        <div class="row">
+
+          <div class="musicBar" id="defualtBar" >
+            <div id="progressBar"></div>
+            <span id="currentTime">0:00</span>
+            <span id="fullDuration">4:00</span>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <input id="volumeSlider" type="range" min="0" max="100" value="100" step="1">
+      </div>
+
+
+    </div>
+
+
 </footer>
 </div>
 
@@ -68,10 +91,28 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.2.6/vue.js"></script>
+
+
+
 <script src="js/animate.js"></script>
 <script src="app.js"></script>
 
+<script src="js/audioPlayer.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
 
+
+
+    var bubble = $('.bubble');
+
+  bubble.click(function() {
+  alert('me');
+
+  });
+
+});
+
+</script>
 
 </body>
 </html>
