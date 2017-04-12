@@ -39,16 +39,25 @@ nav {
     }
   }
 }
-.playing:after {
-  content: '';
-  border-radius: 600px;
-  position: relative;
-  background-color: $lightgreen;
-  height: 105%;
-  width: 105%;
-  display: block;
-  z-index: -1;
-  animation: playRotate 8s linear infinite;
+.playing{
+  .innerBubble{
+    display: block;
+  }
+  &:after {
+    content: '';
+    border-radius: 600px;
+    position: relative;
+    background-color: $lightgreen;
+    height: 105%;
+    width: 105%;
+    display: block;
+    z-index: -1;
+    animation: playRotate 8s linear infinite;
+  }
+}
+
+.btn-nothing {
+  background-color: transparent;
 }
 
 @keyframes playRotate {
@@ -109,7 +118,8 @@ footer i.fa {
   margin: 12px;
 }
 
-.musicBar {
+#defualtBar {
+  display: block;
   left: 50%;
   margin-left: -125px;
   position: relative;

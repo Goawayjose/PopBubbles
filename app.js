@@ -47,10 +47,60 @@ var app = new Vue({
     methods: {
 
       playEt: function (name) {
+        
           app.onPlay.splice(0,app.onPlay.length);
           app.onPlay.push(name);
           var daId = app.onPlay[0].id
           $('#' + daId + '').addClass('playing');
+          if(  $('#' + daId + '').siblings().hasClass('playing')){
+             $('#' + daId + '').siblings().removeClass('playing');
+          }
+
+        then(function(){
+          app.playOrPause();
+        });
+      },
+
+      nextTrack: function () {
+
+        // for (var track in app.tracks) {
+        //
+        //     console.log(track);
+        //
+        // }
+        var curent_track = app.onPlay[0];
+        // console.log(curent_track);
+
+        Object.entries(app.tracks).forEach(([key, val]) => {
+          // console.log(key);          // the name of the current key.
+
+          var i = 1;
+
+          if(i == 2){
+            console.log(val)
+            app.playEt(val);
+            console.log('good');
+            i = 3;
+          }
+
+          if(val.id == curent_track.id){
+            console.log('true');
+            i = 2;
+          }
+
+          console.log('false');
+
+        });
+
+
+
+          // var daId = app.onPlay[0].id;
+          // app.onPlay.splice(0,app.onPlay.length);
+          // $('#' + daId + '').removeClass('playing');
+          // $('#' + daId + '').next().addClass('playing');
+          //
+          // daNext = $('#' + daId + '').next();
+
       },
 
       playOrPause: function (){
@@ -70,16 +120,19 @@ var app = new Vue({
 
       duration.innerHTML = minutes + ':' + seconds;
 
+
+
       if(!mytrack.paused && !mytrack.ended){
         mytrack.pause();
-        $('.play').css('display', 'block');
+        $('.play').css('display', 'inline-block');
         $('.pause').css('display', 'none');
         window.clearInterval(updateTime);
       }
       else {
+        mytrack.load();
         mytrack.play();
         $('.play').css('display', 'none');
-        $('.pause').css('display', 'block');
+        $('.pause').css('display', 'inline-block');
         updateTime = setInterval(update, 500);
       }
 
@@ -98,7 +151,7 @@ var app = new Vue({
         }
         else{
           currentTime.innerHTML = "0:00";
-          $('.play').css('display', 'block');
+          $('.play').css('display', 'inline-block');
           $('.pause').css('display', 'none');
           progressBar.style.width = "0px";
           window.clearInterval(updateTime);
@@ -134,7 +187,7 @@ var app = new Vue({
     }
 
 
-    }
+  }
 
 
 

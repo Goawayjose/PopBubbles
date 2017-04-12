@@ -31,6 +31,8 @@ nav {
   .bubble:hover .innerBubble {
     display: block; }
 
+.playing .innerBubble {
+  display: block; }
 .playing:after {
   content: '';
   border-radius: 600px;
@@ -41,6 +43,9 @@ nav {
   display: block;
   z-index: -1;
   animation: playRotate 8s linear infinite; }
+
+.btn-nothing {
+  background-color: transparent; }
 
 @keyframes playRotate {
   0% {
@@ -86,7 +91,8 @@ footer i.fa {
   font-size: 28px;
   margin: 12px; }
 
-.musicBar {
+#defualtBar {
+  display: block;
   left: 50%;
   margin-left: -125px;
   position: relative;
