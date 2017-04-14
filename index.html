@@ -27,9 +27,17 @@
                 </nav>
 
                 <div class="bubbleSpace">
-                  <div class="bubble" v-bind:id="track.id" v-on:click="playEt(track) && playOrPause()" v-for="track in tracks"  v-bind:style="{ height: (track.popularity * 4.5) + 'px', width: (track.popularity * 4.5) + 'px', backgroundImage: 'url(' + track.album.images[0].url+ ')'}">
+                  <div class="bubble"
+                    v-for="track in tracks"
+                    v-on:click="setTrack(track)"
+                    v-bind:class="{ playing: isActiveTrack(track) }"
+                    v-bind:style="{
+                      height: (track.popularity * 4.5) + 'px',
+                      width: (track.popularity * 4.5) + 'px',
+                      backgroundImage: 'url(' + track.album.images[0].url+ ')'
+                     }">
                     <div class="innerBubble">
-                      <h4 >{{ track.name }} <br> {{ track.artists[0].name }}  </h4>
+                      <h4>{{ track.name }} <br> {{ track.artists[0].name }}  </h4>
                     </div>
 
                   </div>
@@ -38,33 +46,43 @@
 
 
 <footer>
-  <div v-for="track in onPlay" id="wrapper">
+
     <audio ref="player" id="myTrack" >
-                <source id="deal" v-bind:src="track.preview_url" >
+      <source v-if="playing" v-bind:src="playing.preview_url" >
                 Your browser does not support the audio element.
     </audio>
-  </div>
 
-    <div class="container">
+
+    <div class="container" v-if="playing">
       <div class="col-sm-4">
-        <div v-for="track in onPlay">
-          <div class="col-xs-6">
-            <img v-bind:src="track.album.images[0].url"  class="lilAlbum" alt="">
+
+          <div class="col-xs-6" v-if="playing.album">
+            <img v-bind:src="playing.album.images[0].url"  class="lilAlbum" alt="">
           </div>
-          <div class="col-xs-6">
-            {{track.name}} <br>
-            {{track.artists[0].name}}
+          <div class="col-xs-6" v-if="playing">
+            {{playing.name}} <br>
+            <p v-if="playing.artist.length > 0" v-for="artist in artists">
+              {{artist.name}}
+            </p>
+            <p v-else>
+              {{ playing.artist.name }}
+            </p>
           </div>
-        </div>
+
 
       </div>
       <div class="col-sm-4 daCenter">
         <div class="row">
           <i class="fa fa-thumbs-down mainNav" v-on:click="disLike()" aria-hidden="true"></i>
-          <i class="fa fa-step-backward mainNav" aria-hidden="true"></i>
+          <i class="fa fa-step-backward mainNav" aria-hidden="prevTrack()" aria-hidden="true"></i>
+          <div class="fa" v-if="!playStatus">
+            <i class="fa fa-play mainNav play"  v-on:click="play()" aria-hidden="true"></i>
+          </div>
+          <div class="fa" v-else >
+            <i class="fa fa-pause mainNav pause" v-on:click="pause()" aria-hidden="true"></i>
+          </div>
 
-            <i class="fa fa-play mainNav play"  v-on:click="playOrPause()" aria-hidden="true"></i>
-            <i class="fa fa-pause mainNav pause" v-on:click="playOrPause()" style="display: none;" aria-hidden="true"></i>
+
 
           <i class="fa fa-step-forward mainNav" v-on:click="nextTrack()" aria-hidden="true"></i>
           <i class="fa fa-thumbs-up mainNav" v-on:click="shareDis()" aria-hidden="true"></i>
@@ -80,7 +98,7 @@
         </div>
       </div>
       <div class="col-sm-4">
-        <input id="volumeSlider" type="range" min="0" max="100" value="100" step="1">
+        <input v-on:change="volumeSlider()" id="vSlider" type="range" min="0" max="100" value="100" step="1">
       </div>
 
 

@@ -6,7 +6,8 @@ var app = new Vue({
 
     data: {
      songs : [],
-     onPlay : [],
+     playing : [],
+     playStatus : false,
      tracks : [],
 
     },
@@ -46,69 +47,48 @@ var app = new Vue({
     },
     methods: {
 
-      playEt: function (name) {
-        
-          app.onPlay.splice(0,app.onPlay.length);
-          app.onPlay.push(name);
-          var daId = app.onPlay[0].id
-          $('#' + daId + '').addClass('playing');
-          if(  $('#' + daId + '').siblings().hasClass('playing')){
-             $('#' + daId + '').siblings().removeClass('playing');
-          }
-
-        then(function(){
-          app.playOrPause();
-        });
+      // Set tracks
+      setTrack: function (track) {
+        app.playing = track;
+        app.playOrPause();
       },
 
-      nextTrack: function () {
+      isActiveTrack: function(track) {
+        if( app.playing == track ) {
+          return true;
+        }
+      },
 
-        // for (var track in app.tracks) {
-        //
-        //     console.log(track);
-        //
-        // }
-        var curent_track = app.onPlay[0];
-        // console.log(curent_track);
+      pause: function (){
+        var mytrack = document.getElementById('myTrack');
+        mytrack.pause();
+        app.playStatus = false;
+      },
 
-        Object.entries(app.tracks).forEach(([key, val]) => {
-          // console.log(key);          // the name of the current key.
-
-          var i = 1;
-
-          if(i == 2){
-            console.log(val)
-            app.playEt(val);
-            console.log('good');
-            i = 3;
-          }
-
-          if(val.id == curent_track.id){
-            console.log('true');
-            i = 2;
-          }
-
-          console.log('false');
-
-        });
-
-
-
-          // var daId = app.onPlay[0].id;
-          // app.onPlay.splice(0,app.onPlay.length);
-          // $('#' + daId + '').removeClass('playing');
-          // $('#' + daId + '').next().addClass('playing');
-          //
-          // daNext = $('#' + daId + '').next();
-
+      play: function (){
+        var mytrack = document.getElementById('myTrack');
+        mytrack.play();
+        app.playStatus = true;
       },
 
       playOrPause: function (){
-      var mytrack = document.getElementById('myTrack');
-      var duration = document.getElementById('fullDuration');
-      var currentTime = document.getElementById('currentTime');
 
-      var barSize = 250;
+      var mytrack = document.getElementById('myTrack');
+      mytrack.load();
+      mytrack.play();
+      app.playStatus = true;
+
+      },
+
+
+      volumeSlider: function (){
+        var mytrack = document.getElementById('myTrack');
+        var vSlider = document.getElementById('vSlider');
+
+        mytrack.volume = vSlider.value / 100;
+      },
+
+      /* var barSize = 250;
       var bar = document.getElementById('defualtBar');
       var progressbar = document.getElementById('progressBar');
 
@@ -168,22 +148,37 @@ var app = new Vue({
         }
       }
 
-      var volumeSlider = document.getElementById('volumeSlider');
+      */
 
-      volumeSlider.addEventListener('change', function() {
-        console.log('work');
-        mytrack.volume = volumeSlider.value / 100;
+
+    nextTrack: function() {
+      var current_key;
+
+      Object.entries(app.tracks).forEach(([key, track]) => {
+        if(track.id == app.playing.id){
+          current_key = key;
+        }
       });
+      var new_track = app.tracks[Math.floor(current_key)+1];
+      app.playing = new_track;
+      app.playOrPause();
     },
 
-    shareDis: function (){
-      alert('me');
+    prevTrack: function() {
+      var current_key;
+
+      Object.entries(app.tracks).forEach(([key, track]) => {
+        if(track.id == app.playing.id){
+          current_key = key;
+        }
+      });
+      var new_track = app.tracks[Math.floor(current_key)-1];
+      app.playing = new_track;
+      app.playOrPause();
     },
 
     disLike: function (){
-      var daId = app.onPlay[0].id
-      $('#' + daId + '').addClass('removing');
-      app.onPlay.splice(0,app.onPlay.length);
+      console.log('yeas');
     }
 
 
@@ -196,14 +191,3 @@ var app = new Vue({
 
 
 var mytrack = document.getElementById('myTrack');
-
-
-
-
-/* Questions:
-
-- getting jquery to work after bubbles are loaded?
-- why is the audio skipper not working?
-- going about getting top-100 for different genres?
-
-*/
