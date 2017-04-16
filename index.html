@@ -45,7 +45,7 @@
                 </div>
 
 
-<footer>
+<footer v-if="playing">
 
     <audio ref="player" id="myTrack" >
       <source v-if="playing" v-bind:src="playing.preview_url" >
@@ -61,12 +61,14 @@
           </div>
           <div class="col-xs-6" v-if="playing">
             {{playing.name}} <br>
-            <p v-if="playing.artist.length > 0" v-for="artist in artists">
+            <p v-if="playing.artists.length > 0 " v-for="artist in playing.artists">
               {{artist.name}}
             </p>
             <p v-else>
-              {{ playing.artist.name }}
+              {{playing.artist.name}}
             </p>
+
+
           </div>
 
 
@@ -89,10 +91,10 @@
         </div>
         <div class="row">
 
-          <div class="musicBar" id="defualtBar">
+          <div class="musicBar" id="defualtBar" v-on:click="clickedBar()">
             <div id="progressBar"></div>
             <span id="currentTime">0:00</span>
-            <span id="fullDuration">4:00</span>
+            <span id="fullDuration">0:30</span>
           </div>
 
         </div>

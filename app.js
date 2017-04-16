@@ -74,11 +74,41 @@ var app = new Vue({
       playOrPause: function (){
 
       var mytrack = document.getElementById('myTrack');
+      var currentTime = document.getElementById('currentTime');
+
+      var barSize = 250;
+      var bar = document.getElementById('defualtBar');
+      var progressbar = document.getElementById('progressBar');
+
+
+      updateTime = setInterval(update, 500);
+
+      function pad(d) {
+        return (d < 10) ? '0' + d.toString() : d.toString();
+      }
+
+      function update(){
+        if(!mytrack.ended) {
+            var playedMinutes = parseInt(mytrack.currentTime/60);
+            var playedSeconds = pad(parseInt(mytrack.currentTime%60));
+            currentTime.innerHTML = playedMinutes + ':' + playedSeconds;
+
+            var size = parseInt(mytrack.currentTime*barSize/mytrack.duration);
+            progressBar.style.width = size + "px";
+        }
+        else{
+          currentTime.innerHTML = "0:00";
+          app.playStatus = false;
+
+          progressBar.style.width = "0px";
+        }
+      }
+
+
       mytrack.load();
       mytrack.play();
       app.playStatus = true;
-
-      },
+    },
 
 
       volumeSlider: function (){
@@ -86,7 +116,22 @@ var app = new Vue({
         var vSlider = document.getElementById('vSlider');
 
         mytrack.volume = vSlider.value / 100;
+
       },
+
+
+       clickedBar: function(e) {
+              if (!mytrack.ended) {
+                var mouseX = e.pageX - bar.offsetLeft;
+                console.lof(mouseX);
+              /*  var newtime = mouseX * mytrack.duration/barSize;
+
+                mytrack.currentTime = newtime;
+                progressBar.style.width = mouseX + "px"; */
+              }
+            },
+
+
 
       /* var barSize = 250;
       var bar = document.getElementById('defualtBar');
@@ -113,7 +158,7 @@ var app = new Vue({
         mytrack.play();
         $('.play').css('display', 'none');
         $('.pause').css('display', 'inline-block');
-        updateTime = setInterval(update, 500);
+        updateTime = setInteirval(update, 500);
       }
 
       function pad(d) {
