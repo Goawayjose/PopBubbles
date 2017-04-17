@@ -18,12 +18,17 @@ li {
   list-style: none; }
 
 button {
-  background: transparent; }
+  background: transparent;
+  border: transparent; }
 
 #genres {
   position: absolute;
   right: 0;
-  top: 10px; }
+  top: 10px;
+  width: 180px; }
+
+.menu-2 {
+  padding-left: 0; }
 
 #GenreOnView {
   float: left; }
@@ -34,6 +39,8 @@ button {
   padding-bottom: 200px; }
 
 .bubble {
+  float: left;
+  margin: 0.5em;
   position: relative;
   cursor: pointer;
   color: white;
@@ -100,7 +107,6 @@ button {
 
 footer {
   padding-top: 15px;
-  background-color: #272727;
   bottom: 0;
   min-height: 100px;
   width: 100%;
@@ -108,11 +114,28 @@ footer {
   z-index: 99;
   padding-bottom: 15px; }
 
+.blur {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color: #A5A5A5;
+  top: 0;
+  opacity: 0.8;
+  -webkit-backdrop-filter: blur(30px); }
+  .blur:before {
+    content: '';
+    width: 100%;
+    height: 70%;
+    bottom: 0px;
+    background-color: white;
+    position: absolute;
+    filter: blur(30px); }
+
 footer .daCenter {
   text-align: center; }
 
 footer i.fa {
-  color: #979797;
+  color: black;
   font-size: 28px;
   margin: 12px; }
 
@@ -135,5 +158,8 @@ footer i.fa {
 .lilAlbum {
   height: 80px;
   width: 80px; }
+
+#vSlider {
+  max-width: 70px; }
 
 /*# sourceMappingURL=main.css.map */

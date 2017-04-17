@@ -51,6 +51,8 @@ var app = new Vue({
         app.tracks.splice(0);
         app.songs.splice(0);
 
+document.getElementById('GenreOnView').innerHTML = genre;
+
         axios.get('songs.php', {
           params: {
             genre: genre
@@ -59,7 +61,7 @@ var app = new Vue({
           .then(function (response){
 
             app.songs = response.data;
-            console.log(response.data)
+
 
             for (i = 0; i < app.songs.length; i++) {
 

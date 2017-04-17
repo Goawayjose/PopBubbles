@@ -33,7 +33,7 @@
 
 
 
-<div  class="bubbleSpace grid" v-masonry="{ isResizeBound: true }">
+<div  class="bubbleSpace grid" >
   <div  class="bubble grid-item"
     v-for="track in tracks"
     v-on:click="setTrack(track)"
@@ -56,7 +56,7 @@
 
 
 <footer v-if="playing">
-
+  <div class="blur"></div>
     <audio ref="player" id="myTrack" >
       <source v-if="playing" v-bind:src="playing.preview_url" >
       Your browser does not support the audio element.
@@ -122,13 +122,14 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.2.6/vue.js"></script>
-<script src="vue-masonry.js"></script>
+<!-- <script src="vue-masonry.js"></script> -->
 
 
 <script>
-var VueMasonry = require('vue-masonry.js')
+/*var VueMasonry = require('vue-masonry.js')
 
-Vue.use(VueMasonry)
+Vue.use(VueMasonry)*/
+
 
 </script>
 
