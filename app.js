@@ -1,6 +1,7 @@
 // app file
 
 
+
 var app = new Vue({
     el: '#vue',
 
@@ -9,20 +10,20 @@ var app = new Vue({
      playing : [],
      playStatus : false,
      tracks : [],
-
+     genres: ['all','pop','hiphop','dance','rock','rb','country','kpop','latin']
     },
     mounted() {
 
       //getting top-100
-      axios.get('songs.php')
+       axios.get('songs.php', {
+          params: {
+            genre: 'all'
+          }
+        })
         .then(function (response){
-
-
+          // console.log(response)
           app.songs = response.data;
-
-
           for (i = 0; i < app.songs.length; i++) {
-
             var song = app.songs[i];
 
               $.ajax({
@@ -32,11 +33,8 @@ var app = new Vue({
                       type: 'track'
                   },
                   success: function (response) {
-
                     app.tracks.push(response.tracks.items[0]);
                       // console.log(items);
-
-
                   }
               });
           }
@@ -49,22 +47,23 @@ var app = new Vue({
     methods: {
 
 
-      all: function () {
+      changeGenre: function (genre = 'all') {
         app.tracks.splice(0);
         app.songs.splice(0);
-        var Genre = document.getElementById('GenreOnView');
 
-        Genre.innerHTML = 'All Genres';
-        axios.get('songs.php')
+        axios.get('songs.php', {
+          params: {
+            genre: genre
+          }
+        })
           .then(function (response){
 
-
             app.songs = response.data;
-
+            console.log(response.data)
 
             for (i = 0; i < app.songs.length; i++) {
 
-              var song = app.songs[i];
+                var song = app.songs[i];
 
                 $.ajax({
                     url: 'https://api.spotify.com/v1/search',
@@ -74,318 +73,20 @@ var app = new Vue({
                     },
                     success: function (response) {
 
-                      app.tracks.push(response.tracks.items[0]);
-                        // console.log(items);
-
-
+                      // check if has undefined
+                      if(response.tracks.items[0]){
+                        app.tracks.push(response.tracks.items[0]);
+                      }
+                      // console.log(items);
                     }
                 });
-            }
 
+            }
           }).catch(function (error) {
             console.log(error);
           });
       },
-      hiphop: function () {
-        app.tracks.splice(0);
-        app.songs.splice(0);
-        var Genre = document.getElementById('GenreOnView');
 
-        Genre.innerHTML = 'Hip Hop';
-        axios.get('songsHiphop.php')
-          .then(function (response){
-
-
-            app.songs = response.data;
-
-
-            for (i = 0; i < app.songs.length; i++) {
-
-              var song = app.songs[i];
-
-                $.ajax({
-                    url: 'https://api.spotify.com/v1/search',
-                    data: {
-                        q: song,
-                        type: 'track'
-                    },
-                    success: function (response) {
-
-                      app.tracks.push(response.tracks.items[0]);
-                        // console.log(items);
-
-
-                    }
-                });
-            }
-
-          }).catch(function (error) {
-            console.log(error);
-          });
-      },
-      pop: function () {
-        app.tracks.splice(0);
-        app.songs.splice(0);
-        var Genre = document.getElementById('GenreOnView');
-
-        Genre.innerHTML = 'Pop';
-
-        axios.get('songsPop.php')
-          .then(function (response){
-
-
-            app.songs = response.data;
-
-
-            for (i = 0; i < app.songs.length; i++) {
-
-              var song = app.songs[i];
-
-                $.ajax({
-                    url: 'https://api.spotify.com/v1/search',
-                    data: {
-                        q: song,
-                        type: 'track'
-                    },
-                    success: function (response) {
-
-                      app.tracks.push(response.tracks.items[0]);
-                        // console.log(items);
-
-
-                    }
-                });
-            }
-
-          }).catch(function (error) {
-            console.log(error);
-          });
-      },
-      dance: function () {
-        app.tracks.splice(0);
-        app.songs.splice(0);
-        var Genre = document.getElementById('GenreOnView');
-
-        Genre.innerHTML = 'Electronic Dance Music';
-
-        axios.get('songsDance.php')
-          .then(function (response){
-
-
-            app.songs = response.data;
-
-
-            for (i = 0; i < app.songs.length; i++) {
-
-              var song = app.songs[i];
-
-                $.ajax({
-                    url: 'https://api.spotify.com/v1/search',
-                    data: {
-                        q: song,
-                        type: 'track'
-                    },
-                    success: function (response) {
-
-                      app.tracks.push(response.tracks.items[0]);
-                        // console.log(items);
-
-
-                    }
-                });
-            }
-
-          }).catch(function (error) {
-            console.log(error);
-          });
-      },
-      rock: function () {
-        app.tracks.splice(0);
-        app.songs.splice(0);
-        var Genre = document.getElementById('GenreOnView');
-
-        Genre.innerHTML = 'Rock';
-
-        axios.get('songsRock.php')
-          .then(function (response){
-
-
-            app.songs = response.data;
-
-
-            for (i = 0; i < app.songs.length; i++) {
-
-              var song = app.songs[i];
-
-                $.ajax({
-                    url: 'https://api.spotify.com/v1/search',
-                    data: {
-                        q: song,
-                        type: 'track'
-                    },
-                    success: function (response) {
-
-                      app.tracks.push(response.tracks.items[0]);
-                        // console.log(items);
-
-
-                    }
-                });
-            }
-
-          }).catch(function (error) {
-            console.log(error);
-          });
-      },
-      rb: function () {
-        app.tracks.splice(0);
-        app.songs.splice(0);
-        var Genre = document.getElementById('GenreOnView');
-
-        Genre.innerHTML = 'Rock';
-
-        axios.get('songsRb.php')
-          .then(function (response){
-
-
-            app.songs = response.data;
-
-
-            for (i = 0; i < app.songs.length; i++) {
-
-              var song = app.songs[i];
-
-                $.ajax({
-                    url: 'https://api.spotify.com/v1/search',
-                    data: {
-                        q: song,
-                        type: 'track'
-                    },
-                    success: function (response) {
-
-                      app.tracks.push(response.tracks.items[0]);
-                        // console.log(items);
-
-
-                    }
-                });
-            }
-
-          }).catch(function (error) {
-            console.log(error);
-          });
-      },
-      country: function () {
-        app.tracks.splice(0);
-        app.songs.splice(0);
-        var Genre = document.getElementById('GenreOnView');
-
-        Genre.innerHTML = 'Rock';
-
-        axios.get('songsCountry.php')
-          .then(function (response){
-
-
-            app.songs = response.data;
-
-
-            for (i = 0; i < app.songs.length; i++) {
-
-              var song = app.songs[i];
-
-                $.ajax({
-                    url: 'https://api.spotify.com/v1/search',
-                    data: {
-                        q: song,
-                        type: 'track'
-                    },
-                    success: function (response) {
-
-                      app.tracks.push(response.tracks.items[0]);
-                        // console.log(items);
-
-
-                    }
-                });
-            }
-
-          }).catch(function (error) {
-            console.log(error);
-          });
-      },
-      kpop: function () {
-        app.tracks.splice(0);
-        app.songs.splice(0);
-        var Genre = document.getElementById('GenreOnView');
-
-        Genre.innerHTML = 'K-Pop';
-
-        axios.get('songsKpop.php')
-          .then(function (response){
-
-
-            app.songs = response.data;
-
-
-            for (i = 0; i < app.songs.length; i++) {
-
-              var song = app.songs[i];
-
-                $.ajax({
-                    url: 'https://api.spotify.com/v1/search',
-                    data: {
-                        q: song,
-                        type: 'track'
-                    },
-                    success: function (response) {
-
-                      app.tracks.push(response.tracks.items[0]);
-                        // console.log(items);
-
-
-                    }
-                });
-            }
-
-          }).catch(function (error) {
-            console.log(error);
-          });
-      },
-      latin: function () {
-        app.tracks.splice(0);
-        app.songs.splice(0);
-
-        axios.get('songslatin.php')
-          .then(function (response){
-
-
-            app.songs = response.data;
-
-
-            for (i = 0; i < app.songs.length; i++) {
-
-              var song = app.songs[i];
-
-                $.ajax({
-                    url: 'https://api.spotify.com/v1/search',
-                    data: {
-                        q: song,
-                        type: 'track'
-                    },
-                    success: function (response) {
-
-                      app.tracks.push(response.tracks.items[0]);
-                        // console.log(items);
-
-
-                    }
-                });
-            }
-
-          }).catch(function (error) {
-            console.log(error);
-          });
-      },
 
       // Set tracks
       setTrack: function (track) {

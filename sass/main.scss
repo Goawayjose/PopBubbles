@@ -32,6 +32,8 @@ button {
   top: 10px;
 }
 
+
+
 #GenreOnView {
   float: left;
 }
@@ -43,15 +45,13 @@ button {
 }
 
 .bubble {
-  cursor: pointer;
-  margin: 8px;
   position: relative;
+  cursor: pointer;
   color: white;
   border-radius: 600px;
   background-position: center;
   background-size: cover;
   display: block;
-  float: left;
   transition: all 0.3s ease-out;
   text-align: center;
   border: 1px solid $lightgreen;
