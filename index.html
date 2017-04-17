@@ -22,6 +22,24 @@
                   <div class="container">
                     <div class="logo"></div>
                     <h3>Pop Bubbles</h3>
+
+                    <li id="genres">
+                       <div class="genreDropDown"><span id="GenreOnView">All Genres</span> <span class="glyphicon glyphicon-chevron-down" ></span></div>
+                        <ul class="drop-menu menu-2">
+                          <li><button v-on:click="all()">All Genres</button></li>
+                          <li><button v-on:click="pop()">pop</button></li>
+                          <li><button v-on:click="hiphop()">hip hop</button></li>
+                          <li><button v-on:click="dance()">Electronic Dance Music</button></li>
+                          <li><button v-on:click="rock()">Rock</button></li>
+                          <li><button v-on:click="rb()">R & B</button></li>
+                          <li><button v-on:click="country()">Country</button></li>
+                          <li><button v-on:click="kpop()">K-Pop</button></li>
+                          <li><button v-on:click="latin()">Latin</button></li>
+                        </ul>
+                    </li>
+
+
+
                   </div>
 
                 </nav>
@@ -37,7 +55,9 @@
                       backgroundImage: 'url(' + track.album.images[0].url+ ')'
                      }">
                     <div class="innerBubble">
-                      <h4>{{ track.name }} <br> {{ track.artists[0].name }}  </h4>
+                      <div class="backgroundImg">
+                        <h4>{{ track.name }} <br> {{ track.artists[0].name }}  </h4>
+                      </div>
                     </div>
 
                   </div>
@@ -121,23 +141,6 @@
 
 <script src="js/animate.js"></script>
 <script src="app.js"></script>
-
-<script src="js/audioPlayer.js"></script>
-<script type="text/javascript">
-$(document).ready(function(){
-
-
-
-    var bubble = $('.bubble');
-
-  bubble.click(function() {
-  alert('me');
-
-  });
-
-});
-
-</script>
 
 </body>
 </html>
