@@ -62,7 +62,7 @@ function flatten(array $array) {
 }
 
 $new = flatten($my_data);
-   
+
 echo json_encode($new);
 
 ?>
